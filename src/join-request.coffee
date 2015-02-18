@@ -27,10 +27,9 @@ module.exports = (robot) ->
   sessionSecret = env.HUBOT_SESSION_SECRET or '1234567890QWERTY'
   strings = yaml.safeLoad fs.readFileSync path.resolve localConfig
   loginTpl = strings.login
+  loginTpl.team = team
   applyTpl = strings.apply
   thanksTpl = strings.thanks
-
-  loginTpl.team = team
 
   robot.brain.on 'loaded', ->
     robot.brain.data.slackApplicants ?= []
