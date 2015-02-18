@@ -5,13 +5,7 @@
 
 > This script is designed specifically for use with the [Slack adapter](https://github.com/tinyspeck/hubot-slack).
 
----
-
-> **NB!** This script currently depends on un-merged changes to the Hubot core source. As of right now, you must specify `git://github.com/therealklanni/hubot.git#18146ab4` as the package version for `hubot` in your `package.json`. This notice will be removed when the changes are merged upstream to hubot core.
-
----
-
-Serves pages from your Hubot which authenticates users via Google Sign-In and 
+Serves pages from your Hubot which authenticates users via Google Sign-In and
 then displays a form for requesting an invite to a [Slack](http://slack.com) team.
 When the form is submitted, the details are posted to your channel/group on Slack.
 
@@ -77,7 +71,7 @@ login:
 
 In the `form` section of `apply`, the `fullName` and `email` blocks should be
 considered necessary for proper functionality of the script. However, you can
-still customize these fields by editing these (and only these) properties: 
+still customize these fields by editing these (and only these) properties:
 
 * `class`
 * `title`
@@ -90,7 +84,7 @@ fit, or add/remove blocks, or even remove the `custom` section entirely, if
 you like.
 
 The default configuration should sufficiently provide varying examples of custom
-field configurations. More advanced users can also modify the view templates 
+field configurations. More advanced users can also modify the view templates
 themselves for even higher degree of customization. If you choose to do this,
 please note that the `fullName` and `email` should still be considered necessary.
 

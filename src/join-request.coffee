@@ -4,7 +4,7 @@ yaml = require 'js-yaml'
 path = require 'path'
 
 validate = (req, res, next) ->
-  if req.session.user?
+  if req.session?.user?
     next()
   else
     req.session.error = 'Not Authenticated'
@@ -44,7 +44,7 @@ module.exports = (robot) ->
       res.send 401
 
   app.get '/login', (req, res) ->
-    if req.session.user?
+    if req.session?.user?
       res.redirect '/apply'
     else
       res.render 'login', loginTpl
