@@ -2,10 +2,6 @@ fs = require 'fs'
 cons = require 'consolidate'
 yaml = require 'js-yaml'
 path = require 'path'
-strings = yaml.safeLoad fs.readFileSync path.resolve "#{__dirname}/../strings.yml"
-loginTpl = strings.login
-applyTpl = strings.apply
-thanksTpl = strings.thanks
 
 validate = (req, res, next) ->
   if req.session.user?
@@ -25,6 +21,12 @@ module.exports = (robot) ->
   env = process.env
   team = env.HUBOT_SLACK_TEAM or ''
   url = env.HUBOT_BASE_URL or 'http://please-set-HUBOT_BASE_URL/'
+  localConfig = env.HUBOT_SIR_STRINGS_PATH or "#{__dirname}/../strings.yml"
+  strings = yaml.safeLoad fs.readFileSync path.resolve localConfig
+  loginTpl = strings.login
+  applyTpl = strings.apply
+  thanksTpl = strings.thanks
+
   loginTpl.team = team
 
   robot.brain.on 'loaded', ->
