@@ -2,9 +2,11 @@ fs = require 'fs'
 cons = require 'consolidate'
 yaml = require 'js-yaml'
 path = require 'path'
+express = require 'express'
+
 
 validate = (req, res, next) ->
-  if req.session?.user?
+  if req.session.user?
     next()
   else
     req.session.error = 'Not Authenticated'
@@ -22,6 +24,7 @@ module.exports = (robot) ->
   team = env.HUBOT_SLACK_TEAM or ''
   url = env.HUBOT_BASE_URL or 'http://please-set-HUBOT_BASE_URL/'
   localConfig = env.HUBOT_SIR_STRINGS_PATH or "#{__dirname}/../strings.yml"
+  sessionSecret = env.HUBOT_SESSION_SECRET or '1234567890QWERTY'
   strings = yaml.safeLoad fs.readFileSync path.resolve localConfig
   loginTpl = strings.login
   applyTpl = strings.apply
@@ -31,6 +34,10 @@ module.exports = (robot) ->
 
   robot.brain.on 'loaded', ->
     robot.brain.data.slackApplicants ?= []
+
+  app.use express.cookieParser()
+  app.use express.session
+    secret: sessionSecret
 
   app.engine 'html', cons.hogan
   app.set 'view engine', 'html'
@@ -44,7 +51,7 @@ module.exports = (robot) ->
       res.send 401
 
   app.get '/login', (req, res) ->
-    if req.session?.user?
+    if req.session.user?
       res.redirect '/apply'
     else
       res.render 'login', loginTpl
